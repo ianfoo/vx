@@ -4,13 +4,12 @@ import (
 	"testing"
 
 	"github.com/ianfoo/vx"
-	"github.com/matryer/is"
 )
 
 func TestProceed(t *testing.T) {
 	tt := []struct {
-		in                     string
-		wantProceed, wantValid bool
+		in             string
+		proceed, valid bool
 	}{
 		{"k", true, true},
 		{"kk", true, true},
@@ -31,10 +30,13 @@ func TestProceed(t *testing.T) {
 	}
 	for _, tc := range tt {
 		t.Run(tc.in, func(t *testing.T) {
-			is := is.New(t)
 			gotProceed, gotValid := vx.Proceed(tc.in)
-			is.Equal(tc.wantProceed, gotProceed) // proceed return value
-			is.Equal(tc.wantValid, gotValid)     // valid input return value
+			if want, got := tc.proceed, gotProceed; want != got {
+				t.Errorf("%q: wanted proceed value = %t, got %t", tc.in, want, got)
+			}
+			if want, got := tc.valid, gotValid; want != got {
+				t.Errorf("%q: wanted valid value = %t, got %t", tc.in, want, got)
+			}
 		})
 	}
 }
