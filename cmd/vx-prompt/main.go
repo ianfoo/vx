@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 
@@ -15,25 +16,31 @@ func main() {
 
 	s := bufio.NewScanner(os.Stdin)
 	for {
-		if !prompt("Do you wish to continue the VX? ", s) {
-			if prompt("Are you sure you wish to exit the VX? ", s) {
-				return
+		proceed, err := prompt("Do you wish to continue the VX? ", s)
+		if !proceed || err != nil {
+			exit, err := prompt("Are you sure you wish to exit the VX? ", s)
+			if exit || err != nil {
+				break
 			}
 		}
 	}
 }
 
-func prompt(p string, s *bufio.Scanner) bool {
+func prompt(p string, s *bufio.Scanner) (bool, error) {
 	for {
 		fmt.Print(p)
 		if !s.Scan() {
-			return false
+			if err := s.Err(); err != nil {
+				fmt.Fprintln(os.Stderr, "error:", err)
+				return false, err
+			}
+			return false, io.EOF
 		}
 		proceed, valid := vx.Proceed(s.Text())
 		if !valid {
 			fmt.Println("Please enter a valid response.")
 			continue
 		}
-		return proceed
+		return proceed, nil
 	}
 }
