@@ -1,0 +1,7 @@
+bin/
+*~
+*.bak
+
+main
+vx-prompt
+!vx-prompt/
