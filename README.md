@@ -2,4 +2,4 @@
 
 Yes/no prompts are so boring, don't you think?
 
-[![asciicast](https://asciinema.org/a/3ifjFq1Esz7wXxLPHZmOWz9br.svg)](https://asciinema.org/a/3ifjFq1Esz7wXxLPHZmOWz9br)
+[![Demo of VX prompt](vx.gif)](https://asciinema.org/a/sKQI0oWi25U6DEPVcuMpCHpVn)
